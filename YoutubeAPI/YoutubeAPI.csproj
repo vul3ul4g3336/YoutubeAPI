@@ -93,6 +93,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -101,14 +102,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\Auth.cs" />
+    <Compile Include="Auth\AuthorizationListener.cs" />
+    <Compile Include="Auth\AuthUtil.cs" />
+    <Compile Include="Auth\UserProfileModel.cs" />
     <Compile Include="Channel\Channel.cs" />
     <Compile Include="Channel\Model\GetYouTubeSearchModel.cs" />
     <Compile Include="Channel\Model\CheckSubscriptionResponse.cs" />
     <Compile Include="Channel\Model\SubscribeChannelRequest.cs" />
     <Compile Include="Channel\Model\SubscribeChannelResponseModel.cs" />
     <Compile Include="Channel\SearchTypeEnum.cs" />
+    <Compile Include="ClientModel.cs" />
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\Model\CommentThreadsResponseModel.cs" />
+    <Compile Include="Comments\Model\PostCommentReplyRequestModel.cs" />
+    <Compile Include="Comments\Model\PostCommentReplyResponseModel.cs" />
+    <Compile Include="Comments\Model\PostNewCommentThreadRequestModel.cs" />
+    <Compile Include="Comments\Model\PostNewCommentThreadResponseModel.cs" />
     <Compile Include="CredentialManager.cs" />
     <Compile Include="Model\GoogleCredentialModel.cs" />
     <Compile Include="Model\RefreshTokenModel.cs" />

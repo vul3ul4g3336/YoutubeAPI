@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using YoutubeAPI.Auth;
 using YoutubeAPI.Channel.Model;
 using YoutubeAPI.Videos.Model;
 
@@ -80,7 +81,18 @@ namespace YoutubeAPI.Channel
             return response;
         }
 
+        public async Task<HttpResponse<UserProfileModel>> GetUserInfo()
+        {
+            var parms = new Dictionary<string, string>()
+            {
+                {"part" , "snippet" },
+                {"mine","true"  },
+            };
+            string url = "channels";
+            HttpResponse<UserProfileModel> response = await _request.GetAsync<UserProfileModel>(url,parms);
+            return response;
 
-        
+        }
+
     }
 }

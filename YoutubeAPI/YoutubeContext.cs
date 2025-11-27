@@ -18,13 +18,10 @@ namespace YoutubeAPI
         public YoutubeContext(string token )
         {            
             _token = token;
-            CreateRequest();
+            //CreateRequest();
         }
-        public YoutubeContext()
-        {
-            _token = ConfigurationManager.AppSettings["token"];
-            CreateRequest();
-        }
+
+     
         public void CreateRequest()
         {
             IHttpRequest httpRequest = new HttpRequest(false, TokenRefresh.RotateGoogleToken());
@@ -34,11 +31,13 @@ namespace YoutubeAPI
             this.Comments = new Comments.Comments(httpRequest);
             this.PlayLists = new PlayLists.PlayLists(httpRequest);
             this.Videos = new Videos.Videos(httpRequest);
+            //this.Auth = new Auth.Auth(httpRequest);
         }
         public Channel.Channel Channel { get; set; }
         public Comments.Comments Comments { get; set; }
         public PlayLists.PlayLists PlayLists { get; set; }
         public Videos.Videos Videos { get; set; }   
+        //public Auth.Auth Auth { get; set; }
 
 
     }

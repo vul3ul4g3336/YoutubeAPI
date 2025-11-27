@@ -7,13 +7,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using YoutubeAPI.Model;
+using PayPal.Manager;
+using System.Configuration;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace YoutubeAPI
 {
     public class TokenRefresh
     {
 
-        private static bool NeedRefresh(GoogleCredentialModel c)
+        private static bool NeedRefresh(ClientModel c)
         {
           return  !DateTime.TryParse(c.ExpireTime, out var exp)
                  || DateTime.UtcNow >= exp.ToUniversalTime().AddSeconds(-30);
@@ -25,19 +29,21 @@ namespace YoutubeAPI
             return async (req, ct, sendDownstream) =>
             {
 
-
-                var cred = CredentialManager.Load<GoogleCredentialModel>("MyYoutubeApp_Token");
+                string filePath = @"C:\Users\TUF\Documents\.youtube\credential.json";
+                string jsonContent = File.ReadAllText(filePath);
+                ClientModel model = JsonConvert.DeserializeObject<ClientModel>(jsonContent);
+                //var cred = CredentialManager.Load<GoogleCredentialModel>("MyYoutubeApp_Token");
                 
 
-                if (NeedRefresh(cred))
+                if (NeedRefresh(model))
                 {
                     // 呼叫 Google Refresh API
                     Model.RefreshTokenModel m = new Model.RefreshTokenModel();
                     var form = new FormUrlEncodedContent(new[]
                     {
-                        new KeyValuePair<string,string>("client_id", m.client_id),
-                        new KeyValuePair<string,string>("client_secret",m.client_secret),
-                        new KeyValuePair<string,string>("refresh_token", cred.RefreshToken),
+                        new KeyValuePair<string,string>("client_id", model.ClientID),
+                        new KeyValuePair<string,string>("client_secret",model.ClientSecret),
+                        new KeyValuePair<string,string>("refresh_token", model.RefreshToken),
                         new KeyValuePair<string,string>("grant_type", "refresh_token"),
                     });
 
@@ -51,14 +57,14 @@ namespace YoutubeAPI
                     var json = await refreshResp.Content.ReadAsStringAsync();
                     var dto = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(json);
 
-                    cred.AccessToken = dto.access_token;
-                    cred.ExpireTime = DateTime.Now.AddSeconds(dto.expires_in)
+                    model.AccessToken = dto.access_token;
+                    model.ExpireTime = DateTime.Now.AddSeconds(dto.expires_in)
                                             .ToString("yyyy-MM-dd HH:mm:ss");
-                    CredentialManager.UpSert("MyYoutubeApp_Token", cred);
+                    
                 }
 
                 // 把最新的 token 掛上去
-                req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", cred.AccessToken);
+                req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", model.AccessToken);
 
                 // 告訴 BaseHandler：繼續送
                 return Interceptor.ReplaceReuqest(req);

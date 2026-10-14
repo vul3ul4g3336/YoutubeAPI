@@ -115,6 +115,8 @@
     <Compile Include="ClientModel.cs" />
     <Compile Include="Comments\Comments.cs" />
     <Compile Include="Comments\Model\CommentThreadsResponseModel.cs" />
+    <Compile Include="Comments\Model\EditCommentRequestModel.cs" />
+    <Compile Include="Comments\Model\EditCommentResponseModel.cs" />
     <Compile Include="Comments\Model\PostCommentReplyRequestModel.cs" />
     <Compile Include="Comments\Model\PostCommentReplyResponseModel.cs" />
     <Compile Include="Comments\Model\PostNewCommentThreadRequestModel.cs" />
@@ -125,11 +127,13 @@
     <Compile Include="Model\TokenResponse.cs" />
     <Compile Include="PlayLists\Model\AddVideoToPlaylistRequestModel.cs" />
     <Compile Include="PlayLists\Model\AddVideoToPlaylistResponseModel.cs" />
+    <Compile Include="PlayLists\Model\GetMyPlaylistVideosResponse.cs" />
     <Compile Include="PlayLists\Model\GetMyUploadAndLikePlaylistIdsRequestModel.cs" />
     <Compile Include="PlayLists\Model\VideoListResponseModel.cs" />
     <Compile Include="PlayLists\PlayLists.cs" />
     <Compile Include="TokenRefresh.cs" />
     <Compile Include="Videos\Model\GetCommentModel.cs" />
+    <Compile Include="Videos\Model\GetVideoByID_Model.cs" />
     <Compile Include="Videos\Model\GetVideoRatingModel.cs" />
     <Compile Include="Videos\Model\GetVideosResponseModel.cs" />
     <Compile Include="Videos\Model\UploadVideoModel.cs" />

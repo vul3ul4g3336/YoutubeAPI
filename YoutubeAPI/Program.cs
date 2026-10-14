@@ -19,8 +19,18 @@ namespace YoutubeAPI
         static async Task Main(string[] args)
         {
 
+            YoutubeContext youtubeContext = new YoutubeContext("");
+            youtubeContext.CreateRequest();
+            UploadVideoModel model = new UploadVideoModel("測試", "", "private");
+            // 原始含有多餘引號的字串
+            string rawPath = "\"C:\\Users\\TUF\\Desktop\\Downloads\\file_example_MP4_480_1_5MG.mp4\"";
 
-            await AuthUtil.RunOAuth2Flow();
+            // 移除首尾的引號，得到正確的系統路徑
+            string filePath = rawPath.Trim('\"');
+            var response = await youtubeContext.Videos.UploadVideo(model, filePath);
+
+
+           // await AuthUtil.RunOAuth2Flow();
 
             //2.嘗試從本地儲存中載入該記錄
             //   (Load() 方法會尋找 targetName 對應的記錄)

@@ -20,7 +20,7 @@ namespace YoutubeAPI
         private static bool NeedRefresh(ClientModel c)
         {
           return  !DateTime.TryParse(c.ExpireTime, out var exp)
-                 || DateTime.UtcNow >= exp.ToUniversalTime().AddSeconds(-30);
+                 || DateTime.UtcNow >= exp.AddSeconds(-60).ToUniversalTime();
         }
                  
 
@@ -38,7 +38,7 @@ namespace YoutubeAPI
                 if (NeedRefresh(model))
                 {
                     // 呼叫 Google Refresh API
-                    Model.RefreshTokenModel m = new Model.RefreshTokenModel();
+                    //Model.RefreshTokenModel m = new Model.RefreshTokenModel();
                     var form = new FormUrlEncodedContent(new[]
                     {
                         new KeyValuePair<string,string>("client_id", model.ClientID),
@@ -60,7 +60,8 @@ namespace YoutubeAPI
                     model.AccessToken = dto.access_token;
                     model.ExpireTime = DateTime.Now.AddSeconds(dto.expires_in)
                                             .ToString("yyyy-MM-dd HH:mm:ss");
-                    
+                    string outputJson = JsonConvert.SerializeObject(model, Formatting.Indented);
+                    File.WriteAllText(filePath, outputJson);
                 }
 
                 // 把最新的 token 掛上去

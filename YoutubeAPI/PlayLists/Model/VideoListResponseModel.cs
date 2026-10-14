@@ -10,7 +10,6 @@ namespace YoutubeAPI.PlayLists.Model
     {
         public string kind { get; set; }
         public string etag { get; set; }
-        public string regionCode { get; set; }
         public Pageinfo pageInfo { get; set; }
         public Item[] items { get; set; }
 
@@ -25,14 +24,9 @@ namespace YoutubeAPI.PlayLists.Model
         {
             public string kind { get; set; }
             public string etag { get; set; }
-            public Id id { get; set; }
+            public string id { get; set; }
             public Snippet snippet { get; set; }
-        }
-
-        public class Id
-        {
-            public string kind { get; set; }
-            public string videoId { get; set; }
+            public Contentdetails contentDetails { get; set; }
         }
 
         public class Snippet
@@ -43,8 +37,7 @@ namespace YoutubeAPI.PlayLists.Model
             public string description { get; set; }
             public Thumbnails thumbnails { get; set; }
             public string channelTitle { get; set; }
-            public string liveBroadcastContent { get; set; }
-            public DateTime publishTime { get; set; }
+            public Localized localized { get; set; }
         }
 
         public class Thumbnails
@@ -52,6 +45,8 @@ namespace YoutubeAPI.PlayLists.Model
             public Default _default { get; set; }
             public Medium medium { get; set; }
             public High high { get; set; }
+            public Standard standard { get; set; }
+            public Maxres maxres { get; set; }
         }
 
         public class Default
@@ -74,5 +69,31 @@ namespace YoutubeAPI.PlayLists.Model
             public int width { get; set; }
             public int height { get; set; }
         }
+
+        public class Standard
+        {
+            public string url { get; set; }
+            public int width { get; set; }
+            public int height { get; set; }
+        }
+
+        public class Maxres
+        {
+            public string url { get; set; }
+            public int width { get; set; }
+            public int height { get; set; }
+        }
+
+        public class Localized
+        {
+            public string title { get; set; }
+            public string description { get; set; }
+        }
+
+        public class Contentdetails
+        {
+            public int itemCount { get; set; }
+        }
+
     }
 }

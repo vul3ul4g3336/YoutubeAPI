@@ -20,11 +20,13 @@ namespace YoutubeAPI.PlayLists.Model
 
         public class Resourceid
         {
-            public string kind { get; set; }
+            public string kind { get; set; } = "youtube#video";
             public string videoId { get; set; }
         }
         public AddVideoToPlaylistRequestModel(string videoID,string playlistID)
         {
+            snippet = new Snippet();
+            snippet.resourceId = new Resourceid();
             this.snippet.resourceId.videoId = videoID;
             this.snippet.playlistId = playlistID;
         }

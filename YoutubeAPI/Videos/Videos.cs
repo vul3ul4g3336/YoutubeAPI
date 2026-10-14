@@ -53,15 +53,15 @@ namespace YoutubeAPI.Videos
         }
 
 
-        public async Task<HttpResponse<VideoListResponseModel>> ListUploadedVideos(UploadVideoModel model)
-        {
-            PlayLists.PlayLists playLists = new PlayLists.PlayLists(_request);
-            var videoListModel = await playLists.GetMyUploadAndLikePlaylistIds();
-            var uploadsListID = videoListModel.Data.items[0].contentDetails.relatedPlaylists.uploads;
+        //public async Task<HttpResponse<VideoListResponseModel>> ListUploadedVideos(UploadVideoModel model)
+        //{
+        //    PlayLists.PlayLists playLists = new PlayLists.PlayLists(_request);
+        //    var videoListModel = await playLists.GetMyUploadAndLikePlaylistIds();
+        //    var uploadsListID = videoListModel.Data.items[0].contentDetails.relatedPlaylists.uploads;
 
-            var response = await playLists.GetMyPlaylistVideos(uploadsListID);
-            return response;
-        }
+        //    var response = await playLists.GetMyPlaylistVideos(uploadsListID);
+        //    return response;
+        //}
 
         public async Task<HttpResponse<GetVideosResponseModel>> GetVideos(string regionCode, string chart = null, string id = null, string videoCategoryId = null)
         {
@@ -113,5 +113,17 @@ namespace YoutubeAPI.Videos
         //    var response = await _request.GetAsync<GetCommentModel>(url, parms);
         //    return response;
         //}
+        public async Task<HttpResponse<GetVideoByID_Model>> GetVideoByID(string videoID)
+        {
+            var parms = new Dictionary<string, string>()
+            {
+                {"part" , "snippet,statistics" },               
+                {"id" , videoID }
+            };
+            string url = "videos";
+
+            var response = await _request.GetAsync<GetVideoByID_Model>(url, parms);
+            return response;
+        }
     }
 }

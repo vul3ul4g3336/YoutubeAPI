@@ -3,8 +3,10 @@ using HttpUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls.WebParts;
 using YoutubeAPI.Comments.Model;
 using YoutubeAPI.Videos;
 using YoutubeAPI.Videos.Model;
@@ -60,6 +62,17 @@ namespace YoutubeAPI.Comments
             string url = "comments";
             PostCommentReplyRequestModel model = new PostCommentReplyRequestModel(parentID, text);
             var response =await _request.PostAsync<PostCommentReplyResponseModel>(url, model, parms);
+            return response;
+        }
+        public async Task<HttpResponse<EditCommentResponseModel>> EditComment(string videoID,string text)
+        {
+            var parms = new Dictionary<string, string>()
+            {
+                {"part","snippet" }
+            };
+            string url = "comments";
+            EditCommentRequestModel model = new EditCommentRequestModel(videoID, text);
+            var response = await _request.PutAsync<EditCommentResponseModel>(url, model, parms);
             return response;
         }
     }

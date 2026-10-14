@@ -30,7 +30,7 @@ namespace YoutubeAPI.PlayLists
             return response;
         }
 
-        public async Task<HttpResponse<VideoListResponseModel>> GetMyPlaylistVideos(string playListID, string videoID = null, string maxResults = "50")
+        public async Task<HttpResponse<GetMyPlaylistVideosResponse>> GetMyPlaylistVideos(string playListID, string videoID = null, string maxResults = "50")
         {
             string url = "playlistItems";
             var parms = new Dictionary<string, string>()
@@ -41,13 +41,13 @@ namespace YoutubeAPI.PlayLists
             };
             if (videoID != null)
                 parms.Add("videoID", videoID);
-            var response = await _request.GetAsync<VideoListResponseModel>(url, parms);
+            var response = await _request.GetAsync<GetMyPlaylistVideosResponse>(url, parms);
             return response;
         }
 
         public async Task<HttpResponse<AddVideoToPlaylistResponseModel>> AddVideoToPlaylist(string videoID, string playListID)
         {
-            string url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet";
+            string url = "playlistItems";
             var parms = new Dictionary<string, string>()
             {
                 {"part","snippet"}
